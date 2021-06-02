@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
-import {FB,FacebookLogin} from 'react-facebook-login';
 
 ReactDOM.render(
   <React.StrictMode>

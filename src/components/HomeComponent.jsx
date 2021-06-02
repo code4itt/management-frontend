@@ -1,64 +1,85 @@
-import React, { Component } from 'react';
+import React, { useCallback, useState,Component } from 'react';
 import authService from '../services/auth-service';
+import postService from '../services/post-service';
+import userService from '../services/user-service';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import PropTypes from 'prop-types'
+import HomeScrollComponent from './HomeScrollComponent'
+import FacebookLikeHomepage from './FacebookLikeHomepage';
+import HomeScrollComponentCopy from './HomeScrollComponentCopy';
 
 class HomeComponent extends Component {
 
     constructor(props) {
         super(props);
-        
+
         this.state = {
             name: "",
-            makevisible: true
+            makevisible: true,
+            posts: []
         }
 
         userService.getUserContent().then(res => {
-            this.setState({message: res.data})
+            this.setState({ message: res.data })
         })
     }
-    
+
     componentDidMount() {
         let user = authService.getCurrentUser();
-        console.log("Userrrr ====>>"+JSON.stringify(user));
-        if(user != null)
-        this.setState({name:user.name});
+        console.log("Userrrr ====>>" + JSON.stringify(user));
+        if (user != null)
+            this.setState({ name: user.name });
 
-        if(user === null){
-            this.setState({makevisible: false})
+        if (user === null) {
+            this.setState({ makevisible: false })
         }
+
+        postService.getAllPost().then(res => {
+            this.setState({ posts: res.data });
+            console.log(JSON.stringify(this.state.posts))
+        },
+            error => {
+                const resMessg = (error.res && error.res.message || error.data || error.toString())
+
+                this.setState({ message: resMessg });
+            })
     }
+
     render() {
 
-        if(this.state.makevisible){
-       
-        return (
-            <div className="Container">
-                <div className="card">
-                    <div className="card-header">
-                    <h1 className="text-center">Welcome {this.state.name}</h1>
-                    </div>
-                    <p className="card-body">
-                    User management, in its simplest form, is the method by which you create, remove and
-maintain your user store. Any solution designed to serve multiple users must have some type of a user management system, be it a proprietary tool built into the product or a tie into an existing system such as Active Directory/LDAP, or another identity provider.
+        if (this.state.makevisible) {
 
-User management not only establishes a user’s authorization to access secure resources, it also serves as a repository of identities and, if done efficiently, can be the source of all identities for an organization.
-                    </p>
-                </div>
-            </div>
-            
-        );
-        }
-        else{
-            return(
-            <div className="Container">
-                <div className="card">
-                    <div className="card-header">
-                    <h1 className="text-center">Welcome To Our Home Page</h1>
+            return (
+                <div className="Container">
+                    <div>
+                        <div className="card-header" style={{background:'#C6EAEA'}}>
+                            <h2 className="text-center">Welcome {this.state.name}!</h2>
+                        </div>
+                        <br></br><br></br>
+                        
+                        <HomeScrollComponent></HomeScrollComponent>
+                        
                     </div>
-                    <p className="card-body">
-                     Oops. You have to login to see the details. If not a member,signup with us...
-                    </p>
                 </div>
-            </div>
+            );
+        }
+        else {
+            return (
+                <div className="Container div-centered-login">
+                    <div className="card">
+                        <div className="card-header" style={{background:'#C6EAEA'}}>
+                            <h2 className="text-center">Welcome To Our Home Page</h2>
+                        </div>
+                        <p className="card-body blockquote text-center">
+                            Oops. You have to login to see the details. If not a member, signup with us...
+                    </p>
+                    <div className="center">
+                    <button className="btn btn-primary btn-block buttonsizebig" onClick={() => this.props.history.push("/login")}>Login</button>
+                    <br></br>
+                    <button className="btn btn-success btn-block buttonsizebig" onClick={() => this.props.history.push("/register")}>SignUp</button>
+                    </div>
+                    </div>
+                </div>
             )
         }
     }

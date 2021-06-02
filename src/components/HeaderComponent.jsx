@@ -5,6 +5,7 @@ class HeaderComponent extends Component {
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-light bg-dark">
+                    <img src="ssyahi.png" alt="Logo" style="width:40px;"/>
                     <h1 className="navbar-brand text-light" href="#"><strong>User Management System</strong></h1>
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav">

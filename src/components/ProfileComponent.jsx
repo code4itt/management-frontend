@@ -142,7 +142,6 @@ class ProfileComponent extends Component {
     }
 
     sendOtp = (event) => {
-       
        // window.alert('Sending OTP... Pls wait for sometime!!')
         userService.sendOTP(this.state.id).then(res => {
             if(res.data){
@@ -171,6 +170,7 @@ class ProfileComponent extends Component {
 
     validateOTP = (event) =>
     {
+        this.setState({respMessage:''})
         const resMessage = "";
         event.preventDefault();
         if(this.state.isOTPsent){
@@ -182,12 +182,12 @@ class ProfileComponent extends Component {
                 this.props.history.push("/profile");
                 }
                 else{
-                    this.setState({respMessage: "Entered OTP is not correct"});
+                    this.setState({respMessage: "Entered OTP is not correct, Please try again!"});
                     this.props.history.push("/profile");
                 }
         },
         error => {
-            const resMessage = 
+            const message = 
             (error.response && 
             error.response.data &&
             error.response.data.message) ||
@@ -196,14 +196,14 @@ class ProfileComponent extends Component {
       
             this.setState({
               loading: true,
-              message: resMessage
+              respMessage: message
             })
           }
           )}
           else{
             this.setState({
                 loading: true,
-                message: resMessage
+                respMessage: 'OTP no sent...'
               })
           }
     }
@@ -211,6 +211,7 @@ class ProfileComponent extends Component {
     
     submitblock = (event) => {
         event.preventDefault();
+        this.setState({respMessage:''})
         userService.updateYourDetails(this.state.id,this.state.username,
             this.state.name,this.state.email,this.state.age,this.state.mobileno,this.state.password,this.state.role)
             .then(res => {
@@ -225,82 +226,99 @@ class ProfileComponent extends Component {
             this.setState({respMessage: resMessage})
             })
     }
+
+    cancel = (event) => {
+        event.preventDefault();
+        window.location.reload();
+    }
     
     render() {
         return (
-            <div>
+            <div style={{backgroundColor:'#1789ac'}}>
                 <br></br>
-                <div className="container">
-                    <div className="row">
+                <div>
+                    <div className="container">
                         <div className="card col-md-6 offset-md-3 offset-md-3">
-                            <h3 className="text-center">Update</h3>
+                        <div className="card-header" style={{background:'#C6EAEA'}}>
+                        <h3 className="text-center">Profile Details</h3>
+                        </div> 
                             <div className="card-body">
+                            <div className="center"> <p style={{color: "green"}}><h5>{this.state.respMessage}</h5></p></div>
+                            
                                 <form>
                                     <div className="form-group">
-                                        <label>Username</label>
+                                    <label><b>Username:</b></label>
                                         <input type="text" className="form-control" name="username" value={this.state.username} onChange={this.addusernamehandler} validations= {[required,vusername]} readOnly/>
                                     </div>
+                                    <br></br>
                                     <div className="form-group">
-                                        <label>Name</label>
+                                    <label><b>Name:</b></label>
                                         <input type="text" className="form-control" name="name" value={this.state.name} onChange={this.addnamehandler} validations= {[required,vname]} readOnly/>
                                     </div>
+                                    <br></br>
                                     <div className="form-group">
-                                        <label>Email address</label>
+                                    <label><b>Email:</b></label>
                                         <input type="email" className="form-control" name="email" value={this.state.email} onChange={this.addemailhandler} validations= {[required,vemail]}/>
                                     </div>
+                                    <br></br>
                                     <div className="form-group">
-                                        <label>Age</label>
+                                    <label><b>Age:</b></label>
                                         <input type="number" className="form-control" name="age" value={this.state.age} onChange={this.addagehandler} validations= {[required,vage]}/>
                                     </div>
+                                    <br></br>
                                     <div className="form-group">
-                                        <label>Mobile No.</label>
+                                    <label><b>Mobile no:</b></label>
                                         <input type="number" className="form-control" name="mobileno" value={this.state.mobileno} onChange={this.addmobilenohandler} validations= {[required,vmobilno]}/>
                                     </div>
+                                    <br></br>
                                     <div className="form-group">
-                                        <label>Authorities</label>
+                                    <label><b>Authorities:</b></label>
                                         {this.state.role.map( rolee => <li>{rolee}</li>)}
                                     </div><br></br>
                                     {
                                     !this.state.isOTPsent && (
                                     <div className="form-group">
-                                        <label>Want to update your profile, verify by sending otp?</label>
+                                        <label><p><b>Want to update your profile, verify by sending otp?</b></p></label>
                                         <div>
-                                        <button className="btn btn-primary" onClick={this.sendintOTPMethod} >Send OTP</button>
+                                        <button className="btn btn-success buttonsize" onClick={this.sendintOTPMethod} >Send OTP</button>
                                         </div>
-                                
                                     </div>)
                                     }
                                     {
-                                        this.state.isOTPsent && (
+                                        this.state.isOTPsent && !this.state.isOTPvalidated && (
                                         <div>
+                                        <br></br>
                                         <form>
                                         <div className="form-group">
-                                        <label>Enter OTP: </label>
+                                        <label><b>Enter OTP:</b></label>
                                         <input type="number" className="form-control" name="OTP" value={this.state.enteredOTP} onChange={this.bindOTP} />
                                         </div> 
+                                        <br></br>
                                         <div>
-                                        <button className="btn btn-primary" onClick={this.validateOTP}>Validate OTP</button>
+                                        <button className="btn btn-success buttonsize" onClick={this.validateOTP}>Validate OTP</button>
                                         </div>
                                          </form> 
                                          </div>
                                         )
                                     }
-                                    <br></br>
+                                    
                                     {
-                                    this.state.isOTPvalidated ? (
+                                    this.state.isOTPvalidated && (
                                     <div>
                                    
                                     <div className="form-group">
-                                        <label>Change Password</label>
+                                    <label><b>Change Password:</b></label>
                                         <input type="password" className="form-control" name="password" value={this.state.password} onChange={this.addpasswordhandler} placeholder="Enter new password" validations= {[required,vpasswrod]}/>
                                     </div>
-                                    <button className="btn btn-primary" onClick={this.submitblock}>Update</button>
-                                    <p style={{color: "green"}}>{this.state.respMessage}</p>s
-                                    </div>) : (
-                                        <div>
-                                             <p style={{color: "green"}}>{this.state.respMessage}</p>
-                                        </div>
-                                    )
+                                    <br></br>
+                                    <div>
+                                    <button className="btn btn-success buttonsize" onClick={this.submitblock}>Update</button>
+                                    <button className="btn btn-danger buttonsize" onClick={this.cancel.bind()}>Cancel</button>
+                                    <br></br>
+                                    </div>
+                                   
+                                    </div>) 
+                                    
                                     
     }
                                     <br/>

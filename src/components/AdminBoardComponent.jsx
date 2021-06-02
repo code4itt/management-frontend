@@ -44,7 +44,8 @@ class AdminBoardComponent extends Component {
             user:[],
             QRImage: "",
             QRgenerated: false,
-            image: null
+            image: null,
+            loading: true
         }
         
         this.addUser = this.addUser.bind(this);
@@ -55,17 +56,11 @@ class AdminBoardComponent extends Component {
 
     componentDidMount() {
         userService.getAdminContent().then(res => {
-            this.setState({user: res.data})
-            //this.setState({user: res.data.map(x => ({...x, QRImage: JSON.stringify(this.handleClick(x.username))}))});
-            console.log(JSON.stringify(this.state.user));
+            this.setState({user: res.data,loading: false})
+          
         });
         
-        //console.log(JSON.stringify(this.state.user));
-        /*
-        userService.getQRImage(this.state.user.username,350,350).then(res => {
-            this.setState({QRImage: res.data})
-        })
-        */
+
     }
 
     generateQRCode = (code) => {
@@ -90,14 +85,20 @@ class AdminBoardComponent extends Component {
 
     render() {
         return (
+            
             <div className="container">
-                <h1 className="text-center text-muted">All User's Data</h1>
+                
+                <div className="card-header" style={{background:'#C6EAEA'}}>
+                <h2 className="text-center">All User's Data</h2>
+                </div>
+                <br></br>
                 <div className="row">
                     <button className="btn btn-primary" onClick={this.addUser}>Add User</button>
                 </div>
                 <br></br>
+                {!this.state.loading ? (
                 <table className="table table-striped table-bordered">
-                    <thead>
+                    <thead className="h1-class-black" style={{background:'#C4D5E7'}}>
                         <td>Name</td>
                         <td>User Name</td>
                         <td>Email</td>
@@ -112,7 +113,7 @@ class AdminBoardComponent extends Component {
                         {
                             this.state.user.map(
                             users =>
-                            <tr key = {users.id}>
+                            <tr key = {users.id} style={{background:'#C6EAEA'}}>
                                 <td>{users.name}</td>
                                 <td>{users.username}</td>
                                 <td>{users.email}</td>
@@ -138,6 +139,7 @@ class AdminBoardComponent extends Component {
                         
                     </tbody>
                 </table>
+                ):(<div className="center"><h4><b>Loading...</b></h4></div>)}
             </div>
         );
     }

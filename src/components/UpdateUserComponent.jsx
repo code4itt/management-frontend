@@ -179,8 +179,8 @@ class UpdateUserComponent extends Component {
         return (
             <div>
                 <br></br>
-                <div className="container">
-                    <div className="row">
+                <div className="div-centered-login">
+                    <div className="container">
                         <div className="card col-md-6 offset-md-3 offset-md-3">
                             <h3 className="text-center">Update User {this.state.name}</h3>
                             <div className="card-body">
@@ -219,9 +219,11 @@ class UpdateUserComponent extends Component {
                                         {this.state.allRoles.map(iterateRoles => <li>{iterateRoles.role}</li>)}
                                         </div>
                                     <br></br>
-                                    <button className="btn btn-primary" onClick={this.submitblock}>Update</button>
+                                    <div className="center">
+                                    <button className="btn btn-primary buttonsizebig" onClick={this.submitblock}>Update</button>
                                     {'   '}
-                                    <button type="cancel" className="btn btn-danger" onClick={this.cancel.bind(this)}>Cancel</button>
+                                    <button type="cancel" className="btn btn-danger buttonsizebig" onClick={this.cancel.bind(this)}>Cancel</button>
+                                    </div>
                                     <div style={{color:'green'}}>{this.state.updated ? (<p>{this.state.message}</p>)
                                     : (<p>{this.state.message}</p>)}</div>
                                 </form>

@@ -139,43 +139,47 @@ class RegisterComponent extends Component {
     
     render() {
         return (
-            <div>
+            <div className="div-centered-login">
                 <br></br>
                 <div className="container">
-                    <div className="row">
+                    <div>
                         <div className="card col-md-6 offset-md-3 offset-md-3">
-                            <h3 className="text-center text-primary">Sign Up</h3>
+                        <div className="card-header" style={{background:'#C6EAEA'}}>
+                            <h3 className="text-center text-primary">Register</h3>
+                        </div>
                             <div className="card-body">
                                 <form>
                                     <div className="form-group">
-                                        <label>Username</label>
-                                        <input type="text" className="form-control" name="username" value={this.state.username} onChange={this.addusernamehandler} placeholder="Enter username" validations= {[required,vusername]}/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Name</label>
-                                        <input type="text" className="form-control" name="name" value={this.state.name} onChange={this.addnamehandler} placeholder="Enter name" validations= {[required,vname]}/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Email address</label>
-                                        <input type="email" className="form-control" name="email" value={this.state.email} onChange={this.addemailhandler} placeholder="Enter email" validations= {[required,vemail]}/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Age</label>
-                                        <input type="number" className="form-control" name="age" value={this.state.age} onChange={this.addagehandler} placeholder="Enter age" validations= {[required,vage]}/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Mobile No.</label>
-                                        <input type="number" className="form-control" name="mobileno" value={this.state.mobileno} onChange={this.addmobilenohandler} placeholder="Enter mobile No." validations= {[required,vmobilno]}/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Password</label>
-                                        <input type="password" className="form-control" name="password" value={this.state.password} onChange={this.addpasswordhandler} placeholder="Enter password" validations= {[required,vpasswrod]}/>
+                                        <label><b>Username:</b></label>
+                                        <input type="text" className="form-control" name="username" value={this.state.username} onChange={this.addusernamehandler} placeholder="Enter username..." validations= {[required,vusername]}/>
                                     </div>
                                     <br></br>
-                                    <button className="btn btn-primary" onClick={this.submitblock}>Signup</button>
+                                    <div className="form-group">
+                                        <label><b>Name:</b></label>
+                                        <input type="text" className="form-control" name="name" value={this.state.name} onChange={this.addnamehandler} placeholder="Enter name..." validations= {[required,vname]}/>
+                                    </div><br></br>
+                                    <div className="form-group">
+                                        <label><p><b>Email Address:</b></p></label>
+                                        <input type="email" className="form-control" name="email" value={this.state.email} onChange={this.addemailhandler} placeholder="Enter email..." validations= {[required,vemail]}/>
+                                    </div><br></br>
+                                    <div className="form-group">
+                                        <label><b>Age:</b></label>
+                                        <input type="number" className="form-control" name="age" value={this.state.age} onChange={this.addagehandler} placeholder="Enter age..." validations= {[required,vage]}/>
+                                    </div><br></br>
+                                    <div className="form-group">
+                                        <label><b>Mobile No:</b></label>
+                                        <input type="number" className="form-control" name="mobileno" value={this.state.mobileno} onChange={this.addmobilenohandler} placeholder="Enter mobile no..." validations= {[required,vmobilno]}/>
+                                    </div><br></br>
+                                    <div className="form-group">
+                                        <label><b>Password:</b></label>
+                                        <input type="password" className="form-control" name="password" value={this.state.password} onChange={this.addpasswordhandler} placeholder="Enter password..." validations= {[required,vpasswrod]}/>
+                                    </div>
+                                    <br></br>
+                                    <div className="center">
+                                    <button className="btn btn-primary buttonsizebig" onClick={this.submitblock}>Register</button>
                                     {'   '}
-                                    <button type="cancel" className="btn btn-danger" onClick={this.cancel.bind(this)}>Cancel</button>
-
+                                    <button type="cancel" className="btn btn-danger buttonsizebig" onClick={this.cancel.bind(this)}>Cancel</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>

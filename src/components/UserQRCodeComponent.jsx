@@ -8,13 +8,14 @@ class UserQRCodeComponent extends Component {
         this.state = {
             username: this.props.match.params.username,
             image: null,
-            QRDownloaded: false
+            QRDownloaded: false,
+            loading: true
         }
 
     }
 
     componentDidMount() {
-        userService.getQRImage(this.state.username, 350, 350).then(response => {
+        userService.getQRImage(this.state.username, 300, 300).then(response => {
             var base64 = btoa(
                 new Uint8Array(response.data).reduce(
                     (data, byte) => data + String.fromCharCode(byte),
@@ -26,7 +27,7 @@ class UserQRCodeComponent extends Component {
                 message: "QR code is successfully generated..."
             })
             this.setState({ image: "data:;base64," + base64 });
-
+            this.setState({loading: false});
         },
         error => {
                 const resMessage =
@@ -44,16 +45,22 @@ class UserQRCodeComponent extends Component {
 
     render() {
         return (
-            <div className="center container">
-                <div><img src={this.state.image} /></div>
-                <br></br> <br></br>
+            <div className="div-centered-login">
+                {!this.state.loading ? (
+                <div><img src={this.state.image} />
+                <p className="text-light center"><b>Code: {this.state.username}</b></p></div>
+                ):(
+                    <div><p className="text-light center"><b>Generating...</b></p></div>
+                )
+                }
+                <br></br>
                 <div>
                     {  this.state.QRDownloaded ?
-                    (<div><a className="btn btn-success" href={this.state.image} download={this.state.username + "QRCode.png"}>Download QR Code</a>
+                    (<div><a className="btn btn-dark btn-block buttonsizebig" href={this.state.image} download={this.state.username + "QRCode.png"}>Download QR Code</a>
                     </div>) : (<div><a className="btn btn-danger" href="/home">Go Home</a></div>)
                     }
                     <br></br>
-                    <div style={{color: 'green'}}>{
+                    <div style={{color: 'white'}}>{
                         this.state.QRDownloaded ? (<p>{this.state.message}</p>)
                             : (<p>{this.state.message}</p>)
                     }

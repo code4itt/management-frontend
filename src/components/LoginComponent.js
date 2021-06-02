@@ -35,6 +35,9 @@ class LoginComponent extends Component {
    // const loading = true;
     const resMessage = "";
     event.preventDefault();
+    this.setState({
+      message: 'Logging...'
+    })
    //const error = "";
     if(this.state.loading){
       AuthService.login(this.state.username, this.state.password).then(res => {
@@ -162,46 +165,46 @@ class LoginComponent extends Component {
         onClick={this.renderProps}
         callback={this.responseFacebook.bind()}
         render= {renderProps => (
-          <button className="btn btn-primary text-center center buttonsizelarge" onClick={renderProps.onClick}>Signup With Facebook</button>
+          <button className="btn btn-primary text-center center buttonsizebig" onClick={renderProps.onClick}>Signup With Facebook</button>
         )}
       />
     );
 
     return (
-      <div>
+      <div className="div-centered-login">
         <br></br>
         <div className="container">
-          <div className="row">
+          <div>
             <div className="card col-md-6 offset-md-3 offset-md-3">
+              <div className="card-header" style={{background:'#C6EAEA'}}>
               <h3 className="text-center">Login</h3>
+              </div>
               <div className="card-body">
                 <form>
                   <div className="form-group">
-                    <label>Username</label>
+                    <label><p><b>Username:</b></p></label>
                     <input type="text" className="form-control" name="username" value={this.state.username} onChange={this.addusernamehandler} placeholder="Enter username" />
                   </div>
+                  <br></br>
                   <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" name="password" value={this.state.password} onChange={this.addpasswordhandler} placeholder="Enter password" />
+                    <label><p><b>Password:</b></p></label>
+                    <input cols="50" type="password" className="form-control" name="password" value={this.state.password} onChange={this.addpasswordhandler} placeholder="Enter password" />
                   </div>
                   <br></br>
-                  <div>
-                    <button className="btn btn-primary btn-block buttonsize" onClick={this.submitblock} href="/home">Login</button>
+                  <div className="center">
+                    <button className="btn btn-primary btn-block buttonsizebig" onClick={this.submitblock} href="/home">Login</button>
 
-                    <button type="button" className="btn btn-danger btn-block buttonsize" onClick={this.signup.bind(this)}>Signup</button>
+                    <button type="button" className="btn btn-danger btn-block buttonsizebig" onClick={this.signup.bind(this)}>Signup</button>
                   </div>
                   <br></br>
                   <div>
-                    <h3 className="text-center" style={{color:"red"}}>{this.state.message}</h3>  
+                    <h3 className="text-center" style={{color:"green"}}>{this.state.message}</h3>  
                   </div>
                   <br></br>
-                  <div>
-                    <h4 className="text-center">----------------OR-------------------</h4>
-                  </div>
-                  <br></br>
+                 
                 </form>
 
-                <div>
+                <div className="center">
                   {fbContent}
                 </div>
               </div>

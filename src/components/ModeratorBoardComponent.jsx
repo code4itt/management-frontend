@@ -6,25 +6,29 @@ class ModeratorBoardComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user:[]
+            user:[],
+            loading:true
         }
       
     }
 
     componentDidMount() {
         userService.getModeratorContent().then(res => {
-            this.setState({user: res.data})
-            console.log(JSON.stringify(this.state.user));
+            this.setState({user: res.data,loading: false})
         })
     }
 
     render() {
         return (
             <div className="container">
-                <h1 className="text-center text-muted">User's Data</h1>
+                <div className="card-header" style={{background:'#C6EAEA'}}>
+                <h2 className="text-center">User's Data</h2>
+                </div>
                 <br></br>
+                <br></br>
+                {!this.state.loading ? (
                 <table className="table table-striped table-bordered">
-                    <thead>
+                    <thead className="h1-class-black" style={{background:'#C6EAEA'}}>
                         <td>Name</td>
                         <td>User Name</td>
                         <td>Email</td>
@@ -37,7 +41,7 @@ class ModeratorBoardComponent extends Component {
                         {
                             this.state.user.map(
                             users =>
-                            <tr key = {users.id}>
+                            <tr key = {users.id} style={{background:'#C4D5E7'}}>
                                 <td>{users.name}</td>
                                 <td>{users.username}</td>
                                 <td>{users.email}</td>
@@ -54,6 +58,7 @@ class ModeratorBoardComponent extends Component {
                         
                     </tbody>
                 </table>
+                 ):(<div className="center"><h4><b>Loading...</b></h4></div>)}
             </div>
         );
     }

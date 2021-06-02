@@ -13,7 +13,7 @@ code {
 }
 
 .footer {
-  position: fixed;
+  position: sticky;
   left: 0;
   bottom: 0;
   width: 100%;
@@ -23,8 +23,26 @@ code {
 }
 
 .buttonsize {
-  width: 50% !important;
+  color: white !important;
+  padding: 8px 16px !important;
+  text-align: left !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  font-size: 10px !important;
+  border-radius: 50% !important;
 }
+
+.buttonsizebig {
+  color: #ffffff !important;
+  padding: 15px 30px !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  font-size: 15px !important;
+  border-radius: 70% !important;
+  margin: 2% !important
+}
+
 .buttonsizelarge {
   width: 100% !important;
 }
