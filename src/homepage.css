@@ -248,3 +248,36 @@ cite {
 	}
 }
 
+.fa {
+	font-size: 50px;
+	cursor: pointer;
+	user-select: none;
+  }
+  
+.fa:hover {
+	color: darkblue;
+  }
+
+.inner-float {
+	  
+	  display: inline-block;
+	  overflow: auto;
+	 margin: 0px auto;
+	
+
+  }
+
+  .inner{
+	display: inline-block;
+  }
+
+  .p-style{
+    overflow: auto;
+    align-items: center;
+	font: italic 1.2rem var(--type-quote);
+	background: var(--quote-bg) no-repeat left;
+	border-radius: var(--border-rad);
+	border: 1px solid rgba(54, 226, 203, 0.815);
+	box-shadow: 2px 2px 4px hsl(0 0% 0% / 20%);
+	padding: 1%;
+}

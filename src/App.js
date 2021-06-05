@@ -53,7 +53,6 @@ render(){
   const {currentUser,showAdminBoard,showModeratorBoard} = this.state;
   return (
         <Router>
-           
             <div>
                 <nav className="navbar navbar-expand navbar-dark bg-dark">
                     <NavLink exact to={"/home"} className="navbar-brand">
