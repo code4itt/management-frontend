@@ -95,7 +95,10 @@ class RegisterComponent extends Component {
             age: "",
             mobileno: "",
             successful: false,
-            message: ""
+            message: "",
+            error: false,
+            loading: false
+           
         }
         
     }
@@ -120,7 +123,8 @@ class RegisterComponent extends Component {
     }
     
     submitblock = (event) => {
-
+        this.setState({loading:true});
+        this.setState({error:false});
         event.preventDefault();
         let user = {username: this.state.username,name: this.state.name,
                     email: this.state.email,age: this.state.age,mobileno: this.state.mobileno,
@@ -129,7 +133,18 @@ class RegisterComponent extends Component {
          authService.register(this.state.username,this.state.name,
            this.state.email,this.state.age,this.state.mobileno,
             this.state.password).then(res => {
+                this.setState({loading:false});
                 this.props.history.push("/home");
+            },error => {
+                const resMessage = 
+                        (error.response && 
+                        error.response.data &&
+                        error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+                this.setState({loading:false});
+                this.setState({error:true});
+                this.setState({message: resMessage})
             })
     }
 
@@ -181,6 +196,9 @@ class RegisterComponent extends Component {
                                     <button type="cancel" className="btn btn-danger buttonsizebig" onClick={this.cancel.bind(this)}>Cancel</button>
                                     </div>
                                 </form>
+                                <div style={{ textAlign: 'center' }}>{this.state.loading && (<div className="center"><h4><b>Loading...</b></h4></div>)}</div>
+                                <div style={{ textAlign: 'center' }}>{this.state.error && <div className="center"><h4><b>{this.state.message}</b></h4></div>}</div>
+            
                             </div>
                         </div>
                     </div>
