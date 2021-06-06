@@ -36,7 +36,6 @@ const HomeScrollComponent = () => {
                 )
                 setError(true)
             }
-
         )
     }
 
@@ -65,48 +64,6 @@ const HomeScrollComponent = () => {
 
     }
 
-    const returnComments = (postid) => {
-        /*
-            setShowComment(true);
-            setLoading(true)
-           
-            axios({
-                method: 'GET',
-                url: 'http://localhost:8080/api/post/getComments',
-                params: { postId: postid, page:0 },
-                headers: authHeader()
-            }).then(res => {
-                console.log(res.data)
-                 const newData = posts.map(item => {
-    
-                    if (item.id === postid) {
-                        item.comments = res.data;
-                    } else {
-                        return item;
-                    }
-                })
-                setPosts(newData);
-                setLoading(false);
-                console.log(fetchedComments)
-            })
-            .catch(e => {
-                setError(true)
-            })
-    
-    
-            console.log(JSON.stringify(postId))
-            const newData = posts.map(item => {
-    
-                    if (item.id === postId) {
-                        return item.comments;
-                    }
-                })
-                setFetchedComment(newData.toLocaleString());
-                console.log(fetchedComments);
-                */
-
-    }
-
     const updateUnLike = (usernames, postid) => {
         axios({
             method: 'PUT',
@@ -128,10 +85,9 @@ const HomeScrollComponent = () => {
         }).catch(e => {
             setError(true)
         });
-
     }
 
-    const addcommenthandler = (event) => {
+    const addcommenthandler = index => (event) => {
         setCommented(event.target.value);
     }
 
@@ -166,7 +122,6 @@ const HomeScrollComponent = () => {
         } else {
             setCommentMessage('');
         }
-
     }
 
     const [hidden, setHidden] = useState({});
@@ -387,7 +342,7 @@ const HomeScrollComponent = () => {
                                         <form>
                                             <div className="justify-content-between">
                                                 <div className="form-group">
-                                                    <textarea type="textarea" className="form-control" value={commented} onChange={addcommenthandler} placeholder="Enter comment..." />
+                                                    <textarea type="textarea" className="form-control" value={commented} onChange={addcommenthandler(index)} placeholder="Enter comment..." />
                                                 </div>
                                                 <br></br>
                                                 <div>
